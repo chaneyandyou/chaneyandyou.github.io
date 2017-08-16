@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我学习Ajax的一些事 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Js-Ajax用原生JS封装ajax，仿jQuery风格">
+<meta name="keywords" content="Ajax">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我学习Ajax的一些事">
+<meta property="og:url" content="http://yoursite.com/2016/05/22/Ajax/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Js-Ajax用原生JS封装ajax，仿jQuery风格">
+<meta property="og:updated_time" content="2017-04-05T07:39:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我学习Ajax的一些事">
+<meta name="twitter:description" content="Js-Ajax用原生JS封装ajax，仿jQuery风格">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ajax" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/22/Ajax/" class="article-date">
+  <time datetime="2016-05-22T14:51:44.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端学习/">前端学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我学习Ajax的一些事
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Js-Ajax"><a href="#Js-Ajax" class="headerlink" title="Js-Ajax"></a>Js-Ajax</h1><p>用原生JS封装ajax，仿jQuery风格 <a id="more"></a></p>
+<h1 id="一-HTTP请求的过程"><a href="#一-HTTP请求的过程" class="headerlink" title="一.HTTP请求的过程"></a>一.HTTP请求的过程</h1><ul>
+<li>http是一种无状态协议，不建立持久的链接 </li>
+<li><p>http的请求过程：</p>
+<p>  1.建立TCP连接，</p>
+<p>  2.web浏览器向web服务器发送求情命令。</p>
+<p>  3.web浏览器发送请求头信息。</p>
+<p>  4.web服务器做出应答</p>
+<p>  5.web服务器发送应答头信息 ，</p>
+<p>  6.web服务器向浏览器发送数据</p>
+<p>  7.web服务器关闭tcp链接</p>
+</li>
+</ul>
+<h1 id="二-HTTP请求，概念介绍"><a href="#二-HTTP请求，概念介绍" class="headerlink" title="二. HTTP请求，概念介绍"></a>二. HTTP请求，概念介绍</h1><ul>
+<li><p>GET：<br>1.一般用于信息获取<br>2.使用URL传递参数<br>3.对所发送信息的数量也有限制，一般在2000个字符  </p>
+<blockquote>
+<p>数据会在地址栏中显示，不安全，大小在32k内</p>
+</blockquote>
+</li>
+<li><p>POST：<br>1.一般用于修改服务器上的资源<br>2.对所发送信息的数量无限制</p>
+<blockquote>
+<p>数据不会在地址栏中显示，相对安全，大小在1G内（可用于文件上传）</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="三-HTTP状态码"><a href="#三-HTTP状态码" class="headerlink" title="三.HTTP状态码"></a>三.HTTP状态码</h1><ul>
+<li><p><strong>http状态码由3位数字构成，其中首位数字定义了状态码类型：</strong></p>
+<p>  1xx：信息类，表示收到web浏览器请求，正在进一步的处理中</p>
+<p>  2xx：成功，表示用户请求被正确接收，理解和处理</p>
+<p>  3xx：重定向，表示请求没有成功，客户必须采取进一步的动作(304:也是表示成功的，俗称“缓存”，就是用缓存来访问)</p>
+<p>  4xx：客户端错误，表示客户端提交的请求有错误，例如：404 not found，意味着请求中所引用的文档不存在。</p>
+<p>  5xx：服务器错误，表示服务器不能完成对请求的处理：如500  </p>
+</li>
+</ul>
+<h1 id="四-ajax的全过程"><a href="#四-ajax的全过程" class="headerlink" title="四.ajax的全过程"></a>四.ajax的全过程</h1><h2 id="1-创建对象-可参考以下几种"><a href="#1-创建对象-可参考以下几种" class="headerlink" title="1.创建对象(可参考以下几种)"></a>1.创建对象(可参考以下几种)</h2><ul>
+<li><p>1.1第一种,通过window对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**1.创建兼容性的Ajax XMLHttpRequest对象</span></div><div class="line"><span class="comment"> *IE6+ Msxm12.XMLHTTP</span></div><div class="line"><span class="comment"> *&lt;IE6 Microsoft.XMLHTTP</span></div><div class="line"><span class="comment"> */</span></div><div class="line"> <span class="keyword">if</span>(<span class="built_in">window</span>.XMLHttpRequest)&#123;</div><div class="line">   <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">   <span class="keyword">var</span> xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>1.2第二种，使用判断浏览器的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(window.navigator.userAgent.indexOf(&quot;MSIE 6&quot;) !=-1)&#123;// ie6</div><div class="line">   var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// ie678 </div><div class="line">&#125; else &#123;</div><div class="line">var xhr = new XMLHttpRequest();//ie7+高级浏览器</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>1.3第三种，使用try-catch(不推荐使用，比较耗性能)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">try&#123;</div><div class="line">var xhr = new XMLHttpRequest();//ie7+高级浏览器 </div><div class="line">&#125; catch(e)&#123;</div><div class="line">var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// ie678  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>1.4第四种，通过typeof判断类型实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(typeof XMLHttpRequest == &quot;function&quot;)&#123;</div><div class="line">var xhr = new XMLHttpRequest();//ie7+高级浏览器 </div><div class="line">&#125; else &#123;</div><div class="line">var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// ie678  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>1.5第五种，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(&quot;XMLHttpRequest&quot; in window)&#123;</div><div class="line">var xhr = new XMLHttpRequest();//ie7+高级浏览器 </div><div class="line">&#125; else &#123;</div><div class="line">var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// ie678  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-连接"><a href="#2-连接" class="headerlink" title="2.连接"></a>2.连接</h2><ul>
+<li>xhr.open(方式,url地址,是否异步);如：<code>xhr.open(&quot;get&quot;,url,true);</code></li>
+</ul>
+<h2 id="3-发送"><a href="#3-发送" class="headerlink" title="3.发送"></a>3.发送</h2><ul>
+<li><code>xhr.send();</code></li>
+</ul>
+<h2 id="4-接收"><a href="#4-接收" class="headerlink" title="4.接收"></a>4.接收</h2><ul>
+<li><p>readystate </p>
+<p>  0：对象已经创建，但请求未初始化，open方法还没有调用</p>
+<p>  1：服务器连接已经建立，open已经调用了</p>
+<p>  2：请求已接受，也就是接收到了头信息(数据发送完成)</p>
+<p>  3：请求处理中，接收数据，也就是接收到了报文头，响应体了</p>
+<p>  4：请求已完成，继续接收数据-报文体，且响应已就绪</p>
+</li>
+<li><p>http状态码(见本文上面第三大点)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">xhr.onreadystatechange = function()&#123;</div><div class="line">   if(xhr.readyState == 4)&#123;//完成</div><div class="line">      clearTimeout(timer);</div><div class="line">      if(xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300 || xhr.status == 304)&#123;</div><div class="line">         options.success &amp;&amp; options.success(xhr.responseText);//responseText: 获取字符串形式的响应数据</div><div class="line">      &#125; else &#123;</div><div class="line">         options.error &amp;&amp; options.error(xhr.status);</div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/22/Ajax/" data-id="cj6f3zfa90000hhw1g9v7e9lt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ajax/">Ajax</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/12/高程3读书笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          高程3读书笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/19/firstBlog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">我为什么要弄博客</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端学习/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/记录/">记录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-import/">babel-plugin-import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bug/">bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css外链加参数/">css外链加参数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/event/">event</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人总结/">个人总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件绑定/">事件绑定</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/定时器/">定时器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具gulp/">工具gulp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具homebrew/">工具homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具mongodb/">工具mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/打印/">打印</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验总结/">经验总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域CORS/">跨域CORS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/babel-plugin-import/" style="font-size: 10px;">babel-plugin-import</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/css外链加参数/" style="font-size: 10px;">css外链加参数</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/个人博客/" style="font-size: 10px;">个人博客</a> <a href="/tags/个人总结/" style="font-size: 10px;">个人总结</a> <a href="/tags/事件绑定/" style="font-size: 10px;">事件绑定</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/定时器/" style="font-size: 10px;">定时器</a> <a href="/tags/工具gulp/" style="font-size: 10px;">工具gulp</a> <a href="/tags/工具homebrew/" style="font-size: 10px;">工具homebrew</a> <a href="/tags/工具mongodb/" style="font-size: 10px;">工具mongodb</a> <a href="/tags/打印/" style="font-size: 10px;">打印</a> <a href="/tags/经验总结/" style="font-size: 10px;">经验总结</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a> <a href="/tags/跨域CORS/" style="font-size: 10px;">跨域CORS</a> <a href="/tags/转载/" style="font-size: 20px;">转载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/29/babel-plugin-import在-balbelrc配置失效/">babel-plugin-import在.balbelrc配置失效</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/20/React事件系统/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/06/connect多种写法/">connect多种写法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/28/react的简单性能优化/">react的简单性能优化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/04/git常用命令/">我的git常用命令笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

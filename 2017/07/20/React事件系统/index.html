@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/07/20/React事件系统/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
+<meta property="og:updated_time" content="2017-07-28T15:56:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-React事件系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/20/React事件系统/" class="article-date">
+  <time datetime="2017-07-20T15:32:11.000Z" itemprop="datePublished">2017-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="react的事件系统"><a href="#react的事件系统" class="headerlink" title="react的事件系统"></a>react的事件系统</h1><blockquote>
+<p>在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。</p>
+</blockquote>
+<h2 id="一．事件系统"><a href="#一．事件系统" class="headerlink" title="一．事件系统"></a>一．事件系统</h2><p>Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个SyntheticEvent对象的实例，它完全符合W3C标准，不会存在任何IE标准的兼容性问题。并且与原生的浏览器时间一样拥有同样的接口，同样支持时间的冒泡机制，我们可以使用stopPropagation（）和preventDefault（）来中断它。</p>
+<p>所有事件都自动绑定到最外层上。如果需要访问原生事件对象，可以使用nativeEvent属性。</p>
+<h3 id="（1）合成事件的绑定方式"><a href="#（1）合成事件的绑定方式" class="headerlink" title="（1）合成事件的绑定方式"></a>（1）合成事件的绑定方式</h3><p>React事件的绑定方式在写法上与原生的HTML事件监听器属性很相似，并且含义和触发的场景也全都是一致的。比如，下面的JSX代码表示为按钮添加点击事件：</p>
+<pre><code>``&lt;button onClick={this.handleClick}&gt;Test&lt;/button&gt;``
+</code></pre><p>仔细观察，我们会发现这种写法与DOM0级事件中直接设置HTML标签属性为事件处理器的做法还是有很大不同的。在JSX中，我们必须使用驼峰的形式来书写事件的属性名（比如onClick），而HTML事件则需要使用全部小写的属性名（比如onclick）。此外，HTML的属性值只能是Javascript代码字符串，而在JSX中，props的值则可以使任意类型，这里是一个函数指针。如果使用DOM0级事件的写法，会是这样的：</p>
+<pre><code>``&lt;button onclick=&apos;handleClick()&apos;&gt;Test&lt;/button&gt;``
+</code></pre><p>React并不会像DOM0级事件那样将事件处理器直接绑定到HTML元素之上。React仅仅借鉴了这种写法而已。下面我们来详细看一下事件的内部机制。</p>
+<h3 id="（2）合成事件的实现机制"><a href="#（2）合成事件的实现机制" class="headerlink" title="（2）合成事件的实现机制"></a>（2）合成事件的实现机制</h3><p>React底层，主要对合成事件做了两件事：事件委派和自动绑定。</p>
+<ul>
+<li>1.事件委派</li>
+</ul>
+<p>在使用React事件前，一定要熟悉它的事件代理机制。它并不会把事件处理函数直接绑定到真实的节点上，而是把所有事件绑定到结构的最外层，使用一个统一的事件监听器，这个事件监听器上维持了一个映射来保存所有组件内部的事件监听和处理函数。当组件挂载或卸载时，只是在这个统一的事件监听器上插入或删除一些对象；当事件发生时，首先被这个统一的事件监听器处理，然后在映射里找到真正的事件处理函数并调用。这样做简化了事件处理和回收机制，效率也有很大提升。</p>
+<ul>
+<li>2.自动绑定</li>
+</ul>
+<p>在React组件中，每个方法的上下文都会指向该组件的实例，即自动绑定this为当前组件。而且React还会对这种引用进行缓存，以达到CPU和内存的最优化。在使用ES6 class或者纯函数时，这种自动绑定就不复存在了，我们需要手动实现this的绑定。</p>
+<p>现在我们来看几种绑定的方法</p>
+<p><strong>bind方法</strong>。这个方法可以帮助我们绑定事件处理器内的this，并可以向事件处理器中传递参数，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    handleClick(e,arg) &#123;</div><div class="line">        <span class="built_in">console</span>.log(e,arg);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render()&#123;</div><div class="line">        <span class="comment">//通过bind方法实现，可以传递参数</span></div><div class="line">        <span class="keyword">return</span> &lt;button onClick=&#123;this.handleClick.bind(this,'test')&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果方法只绑定，不传参，那stage0草案中提供了一个便捷的方案——双冒号语法，其作用与<code>this.handleClick.bind(this)</code>一致,并且Babel已经实现了该提案。比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    handleClick(e) &#123;</div><div class="line">        <span class="built_in">console</span>.log(e);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render()&#123;</div><div class="line">        <span class="comment">//通过``::``方法实现，不可以传递参数</span></div><div class="line">        <span class="keyword">return</span> &lt;button onClick=&#123;::this.handleClick&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>构造器内声明</strong>。在组建的构造器内完成了this的绑定，这种绑定方式的好处在于仅需要绑定一次，而不需要每次调用事件监听器时去执行绑定操作；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    handleClick(e) &#123;</div><div class="line">        <span class="built_in">console</span>.log(e);</div><div class="line">        <span class="comment">//在构造器内完成绑定</span></div><div class="line">        <span class="keyword">this</span>.handleClick = <span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">return</span> &lt;button onClick=&#123;this.handleClick&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>箭头函数</strong>。箭头函数不仅是函数的“语法糖”，它还自动绑定了定义此函数作用域的this，因此我们不需要再对它使用bind方法。比如，以下方式就能运行：</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/20/React事件系统/" data-id="cj6f3zfah0004hhw120h7cxpw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/29/babel-plugin-import在-balbelrc配置失效/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          babel-plugin-import在.balbelrc配置失效
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/06/connect多种写法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">connect多种写法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端学习/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/记录/">记录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-import/">babel-plugin-import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bug/">bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css外链加参数/">css外链加参数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/event/">event</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人总结/">个人总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件绑定/">事件绑定</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/定时器/">定时器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具gulp/">工具gulp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具homebrew/">工具homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具mongodb/">工具mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/打印/">打印</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验总结/">经验总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读书笔记/">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域CORS/">跨域CORS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/babel-plugin-import/" style="font-size: 10px;">babel-plugin-import</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/css外链加参数/" style="font-size: 10px;">css外链加参数</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/个人博客/" style="font-size: 10px;">个人博客</a> <a href="/tags/个人总结/" style="font-size: 10px;">个人总结</a> <a href="/tags/事件绑定/" style="font-size: 10px;">事件绑定</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/定时器/" style="font-size: 10px;">定时器</a> <a href="/tags/工具gulp/" style="font-size: 10px;">工具gulp</a> <a href="/tags/工具homebrew/" style="font-size: 10px;">工具homebrew</a> <a href="/tags/工具mongodb/" style="font-size: 10px;">工具mongodb</a> <a href="/tags/打印/" style="font-size: 10px;">打印</a> <a href="/tags/经验总结/" style="font-size: 10px;">经验总结</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a> <a href="/tags/跨域CORS/" style="font-size: 10px;">跨域CORS</a> <a href="/tags/转载/" style="font-size: 20px;">转载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/29/babel-plugin-import在-balbelrc配置失效/">babel-plugin-import在.balbelrc配置失效</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/20/React事件系统/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/06/connect多种写法/">connect多种写法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/28/react的简单性能优化/">react的简单性能优化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/04/git常用命令/">我的git常用命令笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
