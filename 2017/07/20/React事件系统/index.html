@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="陈其林的博客">
 <meta property="og:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-16T15:42:31.000Z">
+<meta property="og:updated_time" content="2017-08-17T02:26:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react的事件系统">
 <meta name="twitter:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
@@ -125,6 +125,10 @@
 <p><strong>构造器内声明</strong>。在组建的构造器内完成了this的绑定，这种绑定方式的好处在于仅需要绑定一次，而不需要每次调用事件监听器时去执行绑定操作；</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    handleClick(e) &#123;</div><div class="line">        <span class="built_in">console</span>.log(e);</div><div class="line">        <span class="comment">//在构造器内完成绑定</span></div><div class="line">        <span class="keyword">this</span>.handleClick = <span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">return</span> &lt;button onClick=&#123;this.handleClick&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>箭头函数</strong>。箭头函数不仅是函数的“语法糖”，它还自动绑定了定义此函数作用域的this，因此我们不需要再对它使用bind方法。比如，以下方式就能运行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">	<span class="keyword">const</span> handleClick = <span class="function">(<span class="params">e</span>)=&gt;</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(e);</div><div class="line">	</div><div class="line">	&#125;</div><div class="line">  </div><div class="line">   render()&#123;</div><div class="line">      <span class="keyword">return</span> &lt;button onClick=&#123;this.handleClick&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">	handleClick(e) &#123;</div><div class="line">      <span class="built_in">console</span>.log(e);    </div><div class="line">   &#125;</div><div class="line">  </div><div class="line">   render()&#123;</div><div class="line">      <span class="keyword">return</span> &lt;button onClick=&#123;()=&gt;this.handleClick()&#125; &gt;试一试&lt;/button&gt;;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用上述几种方式，都能够实现在类定义的组件中绑定<code>this</code>上下文的效果。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -242,7 +246,7 @@
 			
 		
 			
-				<li><a href="/tags/工具gulp/" title="工具gulp">工具gulp<sup>1</sup></a></li>
+				<li><a href="/tags/优化/" title="优化">优化<sup>1</sup></a></li>
 			
 		
 			
@@ -250,15 +254,15 @@
 			
 		
 			
-				<li><a href="/tags/babel-plugin-import/" title="babel-plugin-import">babel-plugin-import<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/事件系统/" title="事件系统">事件系统<sup>1</sup></a></li>
+				<li><a href="/tags/工具homebrew/" title="工具homebrew">工具homebrew<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Redux/" title="Redux">Redux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/babel-plugin-import/" title="babel-plugin-import">babel-plugin-import<sup>1</sup></a></li>
 			
 		
 			
@@ -274,19 +278,19 @@
 			
 		
 			
+				<li><a href="/tags/工具gulp/" title="工具gulp">工具gulp<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Ajax/" title="Ajax">Ajax<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/事件系统/" title="事件系统">事件系统<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/事件绑定/" title="事件绑定">事件绑定<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/工具homebrew/" title="工具homebrew">工具homebrew<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/优化/" title="优化">优化<sup>1</sup></a></li>
 			
 		
 			
@@ -302,11 +306,11 @@
 			
 		
 			
-				<li><a href="/tags/个人总结/" title="个人总结">个人总结<sup>1</sup></a></li>
+				<li><a href="/tags/个人博客/" title="个人博客">个人博客<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/个人博客/" title="个人博客">个人博客<sup>1</sup></a></li>
+				<li><a href="/tags/个人总结/" title="个人总结">个人总结<sup>1</sup></a></li>
 			
 		
 			
