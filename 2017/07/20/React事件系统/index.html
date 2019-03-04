@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="陈其林的博客">
 <meta property="og:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-23T14:57:58.000Z">
+<meta property="og:updated_time" content="2019-03-04T15:46:58.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react的事件系统">
 <meta name="twitter:description" content="react的事件系统 在开发react进行事件处理的时候是否会发现很多问题呢？请看《深入React技术栈》一书怎么写的，同样为我解惑良多。  一．事件系统Virtual DOM（虚拟DOM）在内存中是以对象的形式存在的，如果想要在这些对象上添加事件，就会非常简单。React基于Virtual DOM实现了一个SyntheticEvent（合成事件）层，我们所定义的事件处理器会接收到一个Synthe">
@@ -117,7 +117,7 @@
 <li>2.自动绑定</li>
 </ul>
 <p>在React组件中，每个方法的上下文都会指向该组件的实例，即自动绑定this为当前组件。而且React还会对这种引用进行缓存，以达到CPU和内存的最优化。在使用ES6 class或者纯函数时，这种自动绑定就不复存在了，我们需要手动实现this的绑定。</p>
-<p>现在我们来看几种绑定的方法</p>
+<p>现在我们来看几种绑定的方法。</p>
 <p><strong>bind方法</strong>。这个方法可以帮助我们绑定事件处理器内的this，并可以向事件处理器中传递参数，比如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    handleClick(e,arg) &#123;</div><div class="line">        <span class="built_in">console</span>.log(e,arg);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render()&#123;</div><div class="line">        <span class="comment">//通过bind方法实现，可以传递参数</span></div><div class="line">        <span class="keyword">return</span> &lt;button onClick=&#123;this.handleClick.bind(this,'test')&#125;&gt;试一试&lt;/button&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>如果方法只绑定，不传参，那stage0草案中提供了一个便捷的方案——双冒号语法，其作用与<code>this.handleClick.bind(this)</code>一致,并且Babel已经实现了该提案。比如：</p>
@@ -250,15 +250,23 @@
 			
 		
 			
-				<li><a href="/tags/工具homebrew/" title="工具homebrew">工具homebrew<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/事件系统/" title="事件系统">事件系统<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/工具mongodb/" title="工具mongodb">工具mongodb<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/babel-plugin-import/" title="babel-plugin-import">babel-plugin-import<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/event/" title="event">event<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Redux/" title="Redux">Redux<sup>1</sup></a></li>
 			
 		
 			
@@ -270,7 +278,7 @@
 			
 		
 			
-				<li><a href="/tags/event/" title="event">event<sup>1</sup></a></li>
+				<li><a href="/tags/Ajax/" title="Ajax">Ajax<sup>1</sup></a></li>
 			
 		
 			
@@ -278,19 +286,11 @@
 			
 		
 			
-				<li><a href="/tags/Redux/" title="Redux">Redux<sup>1</sup></a></li>
+				<li><a href="/tags/工具homebrew/" title="工具homebrew">工具homebrew<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/事件绑定/" title="事件绑定">事件绑定<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ajax/" title="Ajax">Ajax<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/工具mongodb/" title="工具mongodb">工具mongodb<sup>1</sup></a></li>
 			
 		
 			
@@ -302,11 +302,11 @@
 			
 		
 			
-				<li><a href="/tags/webpack/" title="webpack">webpack<sup>1</sup></a></li>
+				<li><a href="/tags/打印/" title="打印">打印<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/打印/" title="打印">打印<sup>1</sup></a></li>
+				<li><a href="/tags/webpack/" title="webpack">webpack<sup>1</sup></a></li>
 			
 		
 			
@@ -349,7 +349,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="Chaney Chan">Chaney Chan</a>
 		
