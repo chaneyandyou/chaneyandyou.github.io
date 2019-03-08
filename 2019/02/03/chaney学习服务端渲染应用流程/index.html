@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+
+
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="去做就对了">
+    <meta name="author" content="Chaney Chan">
+    <meta name="keywords" content="">
+    <title>chaney学习服务端渲染应用流程 ~ Chaney</title>
+    <link rel="stylesheet" href="/css/Material_Icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+        <link rel="stylesheet" href="/css/post.css">
+        
+            <link rel="stylesheet" href="/css/Prettify/tomorrow-night-eighties.min.css">
+        
+    
+</head>
+
+<body class=" sidebar-collapse">
+<nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/">
+                Chaney</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="/archives/">
+                                    archives
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">
+                                    about
+                                </a>
+                            </li>
+                        
+                    
+                    
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://github.com/chaneyandyou" target="_blank" data-original-title="See me here">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+    </div>
+</nav>
+    
+  <div class="page-header header-filter" data-parallax="false" style="background-image: url('/img/post-banner.jpg'); height: 70vh;">
+    
+      <div class="container">
+        <h1 class="title text-center post_title">chaney学习服务端渲染应用流程</h1>
+        <p class="text-center"><b>星期日, 二月 3日 2019, 11:19 晚上</b></p>
+      </div>
+    
+  </div>
+
+  
+  
+  
+    <div class="row" style="margin: 0 0 0; z-index: 999;">
+  <div class="col-md-8 offset-md-1">
+    <div class="main main-raised">
+      <div class="container">
+        <div class="section">
+          <div class="post_content">
+              <p>React的服务端渲染应用生态经过这么长时间考验和迭代，Next.js应该是体验最好最成熟的了。生产项目直接开箱使用就好，不必自己再搭建一套</p>
+<p>这篇博客是我学习react服务端渲染的笔记，配套的代码demo在github仓库，分支名就是下列步骤的输出。<a href="https://github.com/chaneyandyou/my-react-ssr" target="_blank" rel="external">仓库链接</a></p>
+<h2 id="Step1-最简单的服务端渲染demo"><a href="#Step1-最简单的服务端渲染demo" class="headerlink" title="Step1: 最简单的服务端渲染demo"></a>Step1: 最简单的服务端渲染demo</h2><p>创建最简单的服务端渲染应用，要求</p>
+<ul>
+<li>创建<code>webpack.server.js</code>配置文件，使<code>webpack</code>能正确打包js模块，对ES6语法，<code>React</code>语法能够识别。</li>
+<li>编写react组件。</li>
+<li>通过<code>react-dom/server</code>的<code>renderToString</code>方法将react组件，返回输出字符串给客户端。</li>
+</ul>
+<h2 id="Step2-同构"><a href="#Step2-同构" class="headerlink" title="Step2: 同构"></a>Step2: 同构</h2><p>第一步输出的服务端渲染demo是静态的，<code>click</code>事件等是没有的。<br>使用同构来解决这个问题<br>同构：一套<code>React</code>代码，在服务端执行一次，在客户端再执行一次。<br>其实就是在浏览器端执行js代码（React组件打包后）。<br>创建<code>webpack.client.js</code>配置文件，打包输出一份客户端index.js文件。</p>
+<h3 id="坑："><a href="#坑：" class="headerlink" title="坑："></a>坑：</h3><ul>
+<li>因为在React组件代码已经在服务端运行过一次，所以客户端ReactDOM.render的时候会报以下错：</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/158611/1549553489077-0648a661-8faf-4555-b15f-e5c1aba2db7e.png#align=left&amp;display=inline&amp;height=51&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=102&amp;originWidth=1638&amp;size=53686&amp;status=done&amp;width=819" alt="image.png"><br>解决方法：改用<code>ReactDOM.hydtate</code> 即可</p>
+<ul>
+<li>服务端渲染的节点存在空格会报错，具体如下：</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/158611/1549553445490-d3bbd7d0-4c8f-474d-9dba-da713302d69a.png#align=left&amp;display=inline&amp;height=53&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=106&amp;originWidth=1640&amp;size=43103&amp;status=done&amp;width=820" alt="image.png"><br>解决方法：去掉渲染模板与输出内容中的空格即可。</p>
+<h2 id="Step3-添加路由机制"><a href="#Step3-添加路由机制" class="headerlink" title="Step3: 添加路由机制"></a>Step3: 添加路由机制</h2><p>使用 <a href="https://reacttraining.com/react-router/" target="_blank" rel="external">react-router4</a> 版本进行路由控制。</p>
+<p>客户端和服务端都使用同一份路由配置。</p>
+<h3 id="对于服务端："><a href="#对于服务端：" class="headerlink" title="对于服务端："></a>对于服务端：</h3><p>使用<code>StaticRouter</code> 组件，配置<code>location</code>属性。</p>
+<h3 id="对于客户端："><a href="#对于客户端：" class="headerlink" title="对于客户端："></a>对于客户端：</h3><p>使用<code>BrowserRouter</code> 组件。</p>
+<h2 id="Step4-同构项目中引入Redux"><a href="#Step4-同构项目中引入Redux" class="headerlink" title="Step4: 同构项目中引入Redux"></a>Step4: 同构项目中引入Redux</h2><p>客户端入口和服务端入口都引用redux。</p>
+<p><code>componentDidMount</code> 在服务端是不执行的。</p>
+<p>所以需要做异步数据服务端渲染：loadData方法以及路由重构。</p>
+<p>在服务端入口通过<code>react-router-config</code>的<code>matchRoutes</code>匹配到相关路由（也就表示能拿到组件的loadData方法），在返回渲染的html前，先获取数据。</p>
+<p>通过在返回给前端的渲染模板中的window注入相关数据，同时前端初始store时根据window相关数据给默认值。</p>
+<h2 id="Step5-使用Node代理做中间层获取数据"><a href="#Step5-使用Node代理做中间层获取数据" class="headerlink" title="Step5:使用Node代理做中间层获取数据"></a>Step5:使用Node代理做中间层获取数据</h2><p>使用<code>express-http-proxy</code> 进行proxy代理项目前端的请求转发到真正接口服务器</p>
+<h2 id="Step6：支持多级路由"><a href="#Step6：支持多级路由" class="headerlink" title="Step6：支持多级路由"></a>Step6：支持多级路由</h2><p>更改路由配置，使用<code>react-router-config</code> 的<code>renderRoutes</code>进行多级路由渲染</p>
+<p>对于<strong>react-router V4</strong>版本：</p>
+<ul>
+<li><code>react-router</code>  React Router 核心</li>
+<li><code>react-router-dom</code>  用于 DOM 绑定的 React Router</li>
+<li><code>react-router-native</code>  用于 React Native 的 React Router</li>
+<li><code>react-router-redux</code>  React Router 和 Redux 的集成</li>
+<li><code>react-router-config</code>  用于配置静态路由</li>
+</ul>
+<h2 id="Step7-处理Node中间层cookie问题"><a href="#Step7-处理Node中间层cookie问题" class="headerlink" title="Step7: 处理Node中间层cookie问题"></a>Step7: 处理Node中间层cookie问题</h2><p>处理Node中间层中转项目前端与接口服务器（如java服务器）<code>cookie</code> 。<br>可在服务端创建<code>axios</code>实例时，根据请求体在headers中写入<code>cookie</code> 。</p>
+<h2 id="Step8-处理样式"><a href="#Step8-处理样式" class="headerlink" title="Step8: 处理样式"></a>Step8: 处理样式</h2><p>由于<code>style-loader</code>处理时会使用<code>window</code>全局对象进行一些处理，但在服务端渲染的时候事实上是没有<code>window</code>对象的。<br>故针对服务端渲染的webpack配置中，使用<code>isomorphic-style-loader</code>来代替<code>style-loader</code> 。</p>
+<p>服务端渲染输出时，也需要对style进行处理，可在组件上利用<code>this.props.staticContext</code> 写入css，在服务端中context中获取并写入待返回的渲染模板中</p>
+<h2 id="Step9-搜索引擎优化SEO"><a href="#Step9-搜索引擎优化SEO" class="headerlink" title="Step9: 搜索引擎优化SEO"></a>Step9: 搜索引擎优化SEO</h2><p>使用<code>react-helmet</code> 进行搜索引擎优化<br>搜索引擎展示的标题就是页面的title <br>搜索引擎展示的描述就是页面的meta标签的description</p>
+<h2 id="Last"><a href="#Last" class="headerlink" title="Last"></a>Last</h2><p>客户端渲染的项目想要提高seo，但又不想采用服务端渲染的流程，就可以尝试使用“预渲染技术”来达到目的<br><code>prerender</code>帮助你实现</p>
+<p>预渲染的架构流程如图：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/158611/1550853660342-ef6f0476-f6c1-4c66-bb97-3c0d76fd8e2e.png#align=left&amp;display=inline&amp;height=657&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=1314&amp;originWidth=1824&amp;size=699869&amp;status=done&amp;width=912" alt="image.png"></p>
+
+          </div>
+          <br><br>
+          <div>
+              <p>
+                       
+                      <span class="badge badge-default">#&nbsp;React 服务端渲染 同构</span>
+                      &nbsp;
+                      
+              </p>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+  <!-- TOC -->
+  
+  <div id="toc">
+    <p class="toc-title"><i class="material-icons" style="vertical-align:middle">toc</i>Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+</div>
+
+
+<br>
+<!-- Comments -->
+<div class="comments" id="comments">
+
+    
+    <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>               
+        var disqus_shortname = '';
+        var disqus_config = function () {
+            this.page.url = 'http://yoursite.com/2019/02/03/chaney学习服务端渲染应用流程/'; 
+            this.page.identifier = '/2019/02/03/chaney学习服务端渲染应用流程/';
+        };
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.type = 'text/javascript';
+            s.src = '//'+disqus_shortname+'.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                                
+</div>
+
+</div>
+  
+
+<footer class="footer footer-default">
+        <div class="container">
+          <div class="float-left" style="padding: 15px 0;">
+              
+          </div>
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+          </div>
+        </div>
+</footer>
+      <!--   Core JS Files   -->
+      <script src="/js/core/jquery.min.js?v=3.2.1"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/core/popper.min.js"></script>
+      <script src="/js/core/bootstrap-material-design.min.js"></script>
+      <script src="/js/plugins/moment.min.js"></script>
+      <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+      <script src="/js/material-kit.min.js?v=2.0.5"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+        <script src="/js/post.js"></script>
+        <script src="/js/plugins/prettify.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('pre').addClass('prettyprint linenums');
+                prettyPrint();
+            })
+        </script>
+      
+</body>
+</html>
