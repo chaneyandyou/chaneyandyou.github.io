@@ -95,7 +95,7 @@
           <div class="post_content">
               <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近接到活动组提的一个缺陷：推送的活动url链接后面用hash，但平台处理query时不严谨，导致了活动链接失效白屏。<br><br>活动链接是这样的：<br><code>https://example.com/pathname?key1=value1#/</code></p>
 <p><br>经过平台处理下发是变成了这样：<br><code>https://example.com/pathname?key1=value1#/key2=value2</code></p>
-<h3 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h3><p>找到系统一年多前的，一位同学对url处理是这样的</p>
+<h3 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h3><p>找到系统一年多前的，一位同学对url处理是这样的。</p>
 <pre><code>if (***) {
     return url = url.indexOf(&#39;?&#39;) &gt; -1 ? `${url}&amp;key2=value2` : `${url}?key2=value2`;
 }
@@ -106,7 +106,7 @@ if (***) {
     const pushUrl = new URL(url);
     return pushUrl.searchParams.append(&#39;key2&#39;, &#39;value2&#39;);
 }
-</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>大功告成<br>其实node很多系统模块都是很有用的呀，应该多看看<br>总结放出一张清晰明了的图，来自于<a href="https://nodejs.org/dist/latest-v10.x/docs/api/url.html#url_url_strings_and_url_objects" target="_blank" rel="external">Node官方文档</a></p>
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>大功告成<br>其实node很多系统模块都是很有用的呀，应该多看看。<br>总结放出一张清晰明了的图，来自于<a href="https://nodejs.org/dist/latest-v10.x/docs/api/url.html#url_url_strings_and_url_objects" target="_blank" rel="external">Node官方文档</a>。</p>
 <pre><code>┌────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                              href                                              │
 ├──────────┬──┬─────────────────────┬────────────────────────┬───────────────────────────┬───────┤
@@ -124,7 +124,7 @@ if (***) {
 ├─────────────┴─────────────────────┴────────────────────────┴──────────┴────────────────┴───────┤
 │                                              href                                              │
 └────────────────────────────────────────────────────────────────────────────────────────────────┘
-</code></pre><p>哦，对了，这里有关于hash的描述，请看</p>
+</code></pre><p>哦，对了，这里有关于hash的描述，请看：</p>
 <p><code>hash</code>: 设置或返回从井号 (<code>#</code>) 开始的 <code>URL</code>（锚）。 如： #first</p>
 <p>Done</p>
 
