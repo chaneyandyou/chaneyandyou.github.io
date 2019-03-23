@@ -93,8 +93,8 @@
       <div class="container">
         <div class="section">
           <div class="post_content">
-              <h1 id="Js-Ajax"><a href="#Js-Ajax" class="headerlink" title="Js-Ajax"></a>Js-Ajax</h1><p>用原生JS封装ajax，仿jQuery风格 <a id="more"></a></p>
-<h1 id="一-HTTP请求的过程"><a href="#一-HTTP请求的过程" class="headerlink" title="一.HTTP请求的过程"></a>一.HTTP请求的过程</h1><ul>
+              <p>用原生JS封装ajax，仿jQuery风格 <a id="more"></a></p>
+<h2 id="一-HTTP请求的过程"><a href="#一-HTTP请求的过程" class="headerlink" title="一.HTTP请求的过程"></a>一.HTTP请求的过程</h2><ul>
 <li>http是一种无状态协议，不建立持久的链接 </li>
 <li><p>http的请求过程：</p>
 <p>  1.建立TCP连接，</p>
@@ -106,7 +106,7 @@
 <p>  7.web服务器关闭tcp链接</p>
 </li>
 </ul>
-<h1 id="二-HTTP请求，概念介绍"><a href="#二-HTTP请求，概念介绍" class="headerlink" title="二. HTTP请求，概念介绍"></a>二. HTTP请求，概念介绍</h1><ul>
+<h2 id="二-HTTP请求，概念介绍"><a href="#二-HTTP请求，概念介绍" class="headerlink" title="二. HTTP请求，概念介绍"></a>二. HTTP请求，概念介绍</h2><ul>
 <li><p>GET：<br>1.一般用于信息获取<br>2.使用URL传递参数<br>3.对所发送信息的数量也有限制，一般在2000个字符  </p>
 <blockquote>
 <p>数据会在地址栏中显示，不安全，大小在32k内</p>
@@ -118,7 +118,7 @@
 </blockquote>
 </li>
 </ul>
-<h1 id="三-HTTP状态码"><a href="#三-HTTP状态码" class="headerlink" title="三.HTTP状态码"></a>三.HTTP状态码</h1><ul>
+<h2 id="三-HTTP状态码"><a href="#三-HTTP状态码" class="headerlink" title="三.HTTP状态码"></a>三.HTTP状态码</h2><ul>
 <li><p><strong>http状态码由3位数字构成，其中首位数字定义了状态码类型：</strong></p>
 <p>  1xx：信息类，表示收到web浏览器请求，正在进一步的处理中</p>
 <p>  2xx：成功，表示用户请求被正确接收，理解和处理</p>
@@ -127,7 +127,7 @@
 <p>  5xx：服务器错误，表示服务器不能完成对请求的处理：如500  </p>
 </li>
 </ul>
-<h1 id="四-ajax的全过程"><a href="#四-ajax的全过程" class="headerlink" title="四.ajax的全过程"></a>四.ajax的全过程</h1><h2 id="1-创建对象-可参考以下几种"><a href="#1-创建对象-可参考以下几种" class="headerlink" title="1.创建对象(可参考以下几种)"></a>1.创建对象(可参考以下几种)</h2><ul>
+<h2 id="四-ajax的全过程"><a href="#四-ajax的全过程" class="headerlink" title="四.ajax的全过程"></a>四.ajax的全过程</h2><h3 id="1-创建对象-可参考以下几种"><a href="#1-创建对象-可参考以下几种" class="headerlink" title="1.创建对象(可参考以下几种)"></a>1.创建对象(可参考以下几种)</h3><ul>
 <li>1.1第一种,通过window对象<pre><code class="javascript">/**1.创建兼容性的Ajax XMLHttpRequest对象
 *IE6+ Msxm12.XMLHTTP
 *&lt;IE6 Microsoft.XMLHTTP
@@ -162,13 +162,15 @@ var xhr = new XMLHttpRequest();//ie7+高级浏览器
 } else {
 var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// ie678  
 }
-</code></pre><h2 id="2-连接"><a href="#2-连接" class="headerlink" title="2.连接"></a>2.连接</h2></li>
+</code></pre></li>
+</ul>
+<h3 id="2-连接"><a href="#2-连接" class="headerlink" title="2.连接"></a>2.连接</h3><ul>
 <li>xhr.open(方式,url地址,是否异步);如：<code>xhr.open(&quot;get&quot;,url,true);</code></li>
 </ul>
-<h2 id="3-发送"><a href="#3-发送" class="headerlink" title="3.发送"></a>3.发送</h2><ul>
+<h3 id="3-发送"><a href="#3-发送" class="headerlink" title="3.发送"></a>3.发送</h3><ul>
 <li><code>xhr.send();</code></li>
 </ul>
-<h2 id="4-接收"><a href="#4-接收" class="headerlink" title="4.接收"></a>4.接收</h2><ul>
+<h3 id="4-接收"><a href="#4-接收" class="headerlink" title="4.接收"></a>4.接收</h3><ul>
 <li><p>readystate </p>
 <p>  0：对象已经创建，但请求未初始化，open方法还没有调用</p>
 <p>  1：服务器连接已经建立，open已经调用了</p>
