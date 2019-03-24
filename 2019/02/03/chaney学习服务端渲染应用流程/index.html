@@ -95,6 +95,9 @@
           <div class="post_content">
               <p>React的服务端渲染应用生态经过这么长时间考验和迭代，Next.js应该是体验最好最成熟的了。生产项目直接开箱使用就好，不必自己再搭建一套。</p>
 <p>这篇博客是我学习react服务端渲染的笔记，配套的代码demo在github仓库，分支名就是下列步骤的输出。<a href="https://github.com/chaneyandyou/my-react-ssr" target="_blank" rel="external">仓库链接</a></p>
+<blockquote>
+<p>React服务端渲染能够带来首屏白屏优化和SEO搜索引擎优化等好处，但如果评估后不是十分需要，不建议上服务端渲染技术方案。因为增加了对服务器要求的同时，对前端开发人员的要求也是大大提高。一切方案都应该评估所需成本与收获的比例是否在预期之内，团队是否能承受。</p>
+</blockquote>
 <h2 id="Step1-最简单的服务端渲染demo"><a href="#Step1-最简单的服务端渲染demo" class="headerlink" title="Step1: 最简单的服务端渲染demo"></a>Step1: 最简单的服务端渲染demo</h2><p>创建最简单的服务端渲染应用，要求</p>
 <ul>
 <li>创建<code>webpack.server.js</code>配置文件，使<code>webpack</code>能正确打包js模块，对ES6语法，<code>React</code>语法能够识别。</li>
