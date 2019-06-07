@@ -19,7 +19,7 @@
     <meta name="description" content="去做就对了">
     <meta name="author" content="Chaney Chan">
     <meta name="keywords" content="">
-    <title>我的gulp模版 ~ Chaney</title>
+    <title>Congratulations, you have obtained a PMP ~ Chaney</title>
     <link rel="stylesheet" href="/css/Material_Icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -78,8 +78,8 @@
   <div class="page-header header-filter" data-parallax="false" style="background-image: url('/img/post-banner.jpg'); height: 70vh;">
     
       <div class="container">
-        <h1 class="title text-center post_title">我的gulp模版</h1>
-        <p class="text-center"><b>星期一, 十月 3日 2016, 3:08 下午</b></p>
+        <h1 class="title text-center post_title">Congratulations, you have obtained a PMP</h1>
+        <p class="text-center"><b>星期三, 一月 9日 2019, 10:37 晚上</b></p>
       </div>
     
   </div>
@@ -93,112 +93,11 @@
       <div class="container">
         <div class="section">
           <div class="post_content">
-              <p>作为前端开发者，gulp自动化构建工具也是很有必要的，gulp的task任务其实几乎都大同小异，都说程序员是懒惰的，所以这里整理一份我自己常用的，以便后面copy修改。<a id="more"></a><br><img src="/images/gulp.jpg" alt="gulp插件"></p>
-<p>使用的<code>gulp</code>插件有：</p>
-<ul>
-<li>“gulp”</li>
-<li>“gulp-babel”</li>
-<li>“gulp-clean”</li>
-<li>“gulp-concat”</li>
-<li>“gulp-connect”</li>
-<li>“gulp-cssmin”</li>
-<li>“gulp-imagemin”</li>
-<li>“gulp-less”</li>
-<li>“gulp-load-plugins”</li>
-<li>“gulp-uglify”</li>
-<li>“open”</li>
-</ul>
-<pre><code>var gulp = require(&#39;gulp&#39;);
-var $ = require(&#39;gulp-load-plugins&#39;)();
-var open = require(&#39;open&#39;);
-
-var app = {
-    srcPath: &#39;src/&#39;,
-    devPath: &#39;build/&#39;,
-    prdPath: &#39;dist/&#39;
-};
-
-gulp.task(&#39;lib&#39;, function () {
-    //noinspection JSUnresolvedFunction
-    gulp.src(&#39;bower_components/**/*.js&#39;)
-        .pipe(gulp.dest(app.devPath + &#39;vendor&#39;))
-        .pipe(gulp.dest(app.prdPath + &#39;vendor&#39;))
-        .pipe($.connect.reload());
-
-});
-
-gulp.task(&#39;html&#39;, function () {
-    gulp.src(app.srcPath + &#39;**/*.html&#39;)
-        .pipe(gulp.dest(app.devPath))
-        .pipe(gulp.dest(app.prdPath))
-        .pipe($.connect.reload());
-
-});
-gulp.task(&#39;json&#39;, function () {
-    gulp.src(app.srcPath + &#39;data/**/*.json&#39;)
-        .pipe(gulp.dest(app.devPath + &#39;data&#39;))
-        .pipe(gulp.dest(app.prdPath + &#39;data&#39;))
-        .pipe($.connect.reload());
-});
-gulp.task(&#39;less&#39;, function () {
-    gulp.src(app.srcPath + &#39;style/index.less&#39;)
-        .pipe($.less())
-        .pipe(gulp.dest(app.devPath + &#39;css&#39;))
-        .pipe($.cssmin())
-        .pipe(gulp.dest(app.prdPath + &#39;css&#39;))
-        .pipe($.connect.reload());
-});
-gulp.task(&#39;js&#39;, function () {
-    gulp.src(app.srcPath + &#39;script/**/*.js&#39;)
-        .pipe(babel({
-           presets: [&#39;@babel/env&#39;]
-         }))
-        .pipe($.concat(&#39;index.js&#39;))
-        .pipe(gulp.dest(app.devPath + &#39;js&#39;))
-        .pipe($.uglify())
-        .pipe(gulp.dest(app.prdPath + &#39;js&#39;))
-        .pipe($.connect.reload());
-});
-
-gulp.task(&#39;image&#39;, function () {
-    gulp.src(app.srcPath + &#39;image/**/*&#39;)
-        .pipe(gulp.dest(app.devPath + &#39;image&#39;))
-        .pipe($.imagemin())
-        .pipe(gulp.dest(app.prdPath + &#39;image&#39;))
-        .pipe($.connect.reload());
-});
-
-gulp.task(&#39;build&#39;,[&#39;image&#39;,&#39;js&#39;,&#39;less&#39;,&#39;lib&#39;,&#39;html&#39;,&#39;json&#39;]);
-
-gulp.task(&#39;clean&#39;, function () {
-    gulp.src([app.devPath, app.prdPath])
-        .pipe($.clean());
-});
-
-gulp.task(&#39;serve&#39;,[&#39;build&#39;],function () {
-    $.connect.server({
-        root:[app.devPath],
-        livereload:true,
-        port:1234
-    });
-    open(&#39;http://localhost:1234&#39;);
-    gulp.watch(app.srcPath + &#39;srcipt/**/*.js&#39;,[&#39;js&#39;]);
-    gulp.watch(&#39;bower_componnents/**/*&#39;,[&#39;lib&#39;]);
-    gulp.watch(app.srcPath + &#39;**/*.html&#39;,[&#39;html&#39;]);
-    gulp.watch(app.srcPath + &#39;data/**/*.json&#39;,[&#39;json&#39;]);
-    gulp.watch(app.srcPath + &#39;style/**/*.less&#39;,[&#39;less&#39;]);
-    gulp.watch(app.srcPath + &#39;image/**/*&#39;,[&#39;image&#39;]);
-});
-
-gulp.task(&#39;default&#39;,[&#39;serve&#39;]);
-</code></pre>
+              
           </div>
           <br><br>
           <div>
               <p>
-                       
-                      <span class="badge badge-default">#&nbsp;工具gulp</span>
-                      &nbsp;
                       
               </p>
           </div>
@@ -226,8 +125,8 @@ gulp.task(&#39;default&#39;,[&#39;serve&#39;]);
     <script>               
         var disqus_shortname = '';
         var disqus_config = function () {
-            this.page.url = 'http://yoursite.com/2016/10/03/myGulp/'; 
-            this.page.identifier = '/2016/10/03/myGulp/';
+            this.page.url = 'http://yoursite.com/2019/01/09/Congratulations-you-have-obtained-a-PMP/'; 
+            this.page.identifier = '/2019/01/09/Congratulations-you-have-obtained-a-PMP/';
         };
         (function() { 
             var d = document, s = d.createElement('script');
