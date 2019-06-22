@@ -245,7 +245,8 @@ var box = getId(&#39;box&#39;);       //不会报错
 console.log(box);// &lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>上述代码先在<code>document.getElementById</code>方法内部添加一个让this指针一直指向document对象的操作;<code>document.getElementById =(function(func){})(document.getElementById)</code>;这是一个立即执行函数，把<code>document.getElementById</code>当作实参传进去，而函数内部则返回另一个函数，而这个函数内部则执行改变this指向的操作<code>document.getElementById.apply(document,arguments)</code>;意思是让this永远指向document对象；arguments指的是传进去的实参Id(<code>box</code>);</p>
-<h3 id="三、结论"><a href="#三、结论" class="headerlink" title="三、结论"></a>三、结论</h3><h4 id="This关键字永远指向实际调用者"><a href="#This关键字永远指向实际调用者" class="headerlink" title="This关键字永远指向实际调用者"></a>This关键字永远指向实际调用者</h4>
+<h3 id="三、结论"><a href="#三、结论" class="headerlink" title="三、结论"></a>三、结论</h3><h4 id="This关键字永远指向实际调用者"><a href="#This关键字永远指向实际调用者" class="headerlink" title="This关键字永远指向实际调用者"></a>This关键字永远指向实际调用者</h4><p>也就是说，this指向调用该函数的对象</p>
+
           </div>
           <br><br>
           <div>
