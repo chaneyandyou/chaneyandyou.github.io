@@ -95,6 +95,38 @@
           <div class="post_content">
               <p>近期除了搬瓦工用于科学上网的服务器外，还购买了UCloud的云主机，计划用于折腾各种个人项目使用。</p>
 <p>第一步当然是配置好MySql数据库了，以下是折腾的一些笔记。</p>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>以前都用service命令管理mysql，现在liunx系统升级了，又有了新的更好的方法管理系统进程，那就是systemctl了。</p>
+<p>Systemctl是一个systemd工具，主要负责控制systemd系统和服务管理器。</p>
+<ul>
+<li>启动mysql服务： <code>systemctl start mysqld.service</code></li>
+<li>停止mysql服务：<code>systemctl stop mysqld.service</code></li>
+<li>重启mysql服务：<code>systemctl restart mysqld.service</code></li>
+<li>查看mysql服务当前状态：<code>systemctl status mysqld.service</code></li>
+<li>设置mysql服务开机自启动：<code>systemctl enable mysqld.service</code></li>
+<li>停止mysql服务开机自启动：<code>systemctl disable mysqld.service</code></li>
+</ul>
+<p>###安装MySql 8.0</p>
+<h4 id="1-配置Mysql-8-0安装源"><a href="#1-配置Mysql-8-0安装源" class="headerlink" title="1. 配置Mysql 8.0安装源"></a>1. 配置Mysql 8.0安装源</h4><p> <code>sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm</code></p>
+<h4 id="2-安装Mysql-8-0"><a href="#2-安装Mysql-8-0" class="headerlink" title="2.安装Mysql 8.0"></a>2.安装Mysql 8.0</h4><p><code>sudo yum --enablerepo=mysql80-community install mysql-community-server</code></p>
+<p>输入<code>y</code> 命令，直至安装完成</p>
+<h4 id="3-启动MySql服务"><a href="#3-启动MySql服务" class="headerlink" title="3.启动MySql服务"></a>3.启动MySql服务</h4><p><code>sudo service mysqld start</code></p>
+<p>注意：此命令需要root权限</p>
+<h4 id="4-查看MySql服务状态"><a href="#4-查看MySql服务状态" class="headerlink" title="4.查看MySql服务状态"></a>4.查看MySql服务状态</h4><p><code>service mysqld status</code><br>观察到<code>active（running）</code>字样表示启动成功</p>
+<h4 id="5-查看root用户临时密码"><a href="#5-查看root用户临时密码" class="headerlink" title="5.查看root用户临时密码"></a>5.查看root用户临时密码</h4><p><code>grep &quot;A temporary password&quot; /var/log/mysqld.log</code><br>注意：临时密码稍后将用到</p>
+<h4 id="6-配置Mysql安全策略"><a href="#6-配置Mysql安全策略" class="headerlink" title="6.配置Mysql安全策略"></a>6.配置Mysql安全策略</h4><p><code>mysql_secure_installation</code></p>
+<p>然后将提示输入密码，即上一步的临时密码。进入设置新密码的引导</p>
+<p>设置新的（<code>Mysql</code>中的）<code>root</code>用户密码（需由大写、小写、数字、符号四种混合组成）</p>
+<h3 id="配置远程访问"><a href="#配置远程访问" class="headerlink" title="配置远程访问"></a>配置远程访问</h3><h4 id="1-登录mysql控制台"><a href="#1-登录mysql控制台" class="headerlink" title="1.登录mysql控制台"></a>1.登录mysql控制台</h4><p><code>mysql -uroot -p</code></p>
+<p>注入密码即可进入</p>
+<h4 id="2-创建新的远程用户"><a href="#2-创建新的远程用户" class="headerlink" title="2.创建新的远程用户"></a>2.创建新的远程用户</h4><blockquote>
+<p>处于安全考虑，一般不使用root用户进行远程连接</p>
+</blockquote>
+<p><code>CREATE USER &#39;用户名&#39;@&#39;%&#39; IDENTIFIED BY &#39;密码&#39;;</code></p>
+<h4 id="3-授权给远程用户"><a href="#3-授权给远程用户" class="headerlink" title="3.授权给远程用户"></a>3.授权给远程用户</h4><p><code>GRANT ALL ON *.* TO &#39;[用户名]&#39;@&#39;%&#39;;</code></p>
+<h4 id="4-修改MySql-8-0密码默认策略"><a href="#4-修改MySql-8-0密码默认策略" class="headerlink" title="4.修改MySql 8.0密码默认策略"></a>4.修改MySql 8.0密码默认策略</h4><p>如果此时进行远程连接，发现会报<code>plugin caching_sha2_password</code>错误。这是因为<code>MySQL8.0</code>密码策略默认为<code>caching_sha2_password</code>。与以往版本有所不同。</p>
+<p><code>ALTER USER &#39;用户名&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;密码&#39;;</code></p>
+<h2 id="5-使用navicat进行远程连接"><a href="#5-使用navicat进行远程连接" class="headerlink" title="5.使用navicat进行远程连接"></a>5.使用navicat进行远程连接</h2><p>Done</p>
+<p>笔记参考链接：<br><a href="https://blog.csdn.net/shiyong1949/article/details/72637189" target="_blank" rel="external">https://blog.csdn.net/shiyong1949/article/details/72637189</a><br><a href="https://blog.csdn.net/danykk/article/details/80137223" target="_blank" rel="external">https://blog.csdn.net/danykk/article/details/80137223</a></p>
 
           </div>
           <br><br>
