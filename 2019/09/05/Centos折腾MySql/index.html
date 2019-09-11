@@ -19,7 +19,7 @@
     <meta name="description" content="去做就对了">
     <meta name="author" content="Chaney Chan">
     <meta name="keywords" content="">
-    <title>Centos 7.6安装MySql 8.0笔记 ~ Chaney 陈其林</title>
+    <title>Centos 7.6安装MySql 8.0趟坑笔记 ~ Chaney 陈其林</title>
     <link rel="stylesheet" href="/css/Material_Icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -78,7 +78,7 @@
   <div class="page-header header-filter" data-parallax="false" style="background-image: url('/img/post-banner.jpg'); height: 70vh;">
     
       <div class="container">
-        <h1 class="title text-center post_title">Centos 7.6安装MySql 8.0笔记</h1>
+        <h1 class="title text-center post_title">Centos 7.6安装MySql 8.0趟坑笔记</h1>
         <p class="text-center"><b>星期四, 九月 5日 2019, 11:21 晚上</b></p>
       </div>
     
@@ -105,8 +105,7 @@
 <li>设置mysql服务开机自启动：<code>systemctl enable mysqld.service</code></li>
 <li>停止mysql服务开机自启动：<code>systemctl disable mysqld.service</code></li>
 </ul>
-<p>###安装MySql 8.0</p>
-<h4 id="1-配置Mysql-8-0安装源"><a href="#1-配置Mysql-8-0安装源" class="headerlink" title="1. 配置Mysql 8.0安装源"></a>1. 配置Mysql 8.0安装源</h4><p> <code>sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm</code></p>
+<h3 id="安装MySql-8-0"><a href="#安装MySql-8-0" class="headerlink" title="安装MySql 8.0"></a>安装MySql 8.0</h3><h4 id="1-配置Mysql-8-0安装源"><a href="#1-配置Mysql-8-0安装源" class="headerlink" title="1. 配置Mysql 8.0安装源"></a>1. 配置Mysql 8.0安装源</h4><p> <code>sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm</code></p>
 <h4 id="2-安装Mysql-8-0"><a href="#2-安装Mysql-8-0" class="headerlink" title="2.安装Mysql 8.0"></a>2.安装Mysql 8.0</h4><p><code>sudo yum --enablerepo=mysql80-community install mysql-community-server</code></p>
 <p>输入<code>y</code> 命令，直至安装完成</p>
 <h4 id="3-启动MySql服务"><a href="#3-启动MySql服务" class="headerlink" title="3.启动MySql服务"></a>3.启动MySql服务</h4><p><code>sudo service mysqld start</code></p>
@@ -125,7 +124,8 @@
 <h4 id="3-授权给远程用户"><a href="#3-授权给远程用户" class="headerlink" title="3.授权给远程用户"></a>3.授权给远程用户</h4><p><code>GRANT ALL ON *.* TO &#39;[用户名]&#39;@&#39;%&#39;;</code></p>
 <h4 id="4-修改MySql-8-0密码默认策略"><a href="#4-修改MySql-8-0密码默认策略" class="headerlink" title="4.修改MySql 8.0密码默认策略"></a>4.修改MySql 8.0密码默认策略</h4><p>如果此时进行远程连接，发现会报<code>plugin caching_sha2_password</code>错误。这是因为<code>MySQL8.0</code>密码策略默认为<code>caching_sha2_password</code>。与以往版本有所不同。</p>
 <p><code>ALTER USER &#39;用户名&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;密码&#39;;</code></p>
-<h2 id="5-使用navicat进行远程连接"><a href="#5-使用navicat进行远程连接" class="headerlink" title="5.使用navicat进行远程连接"></a>5.使用navicat进行远程连接</h2><p>Done</p>
+<h4 id="5-使用navicat进行远程连接"><a href="#5-使用navicat进行远程连接" class="headerlink" title="5.使用navicat进行远程连接"></a>5.使用navicat进行远程连接</h4><p>如果依然链接失败，由于MySql默认开放端口是3306，可以检查下服务器有没有开放此段口或修改MySql服务端口。具体操作不在此笔记记录，自行google即可。</p>
+<p>Done</p>
 <p>笔记参考链接：<br><a href="https://blog.csdn.net/shiyong1949/article/details/72637189" target="_blank" rel="external">https://blog.csdn.net/shiyong1949/article/details/72637189</a><br><a href="https://blog.csdn.net/danykk/article/details/80137223" target="_blank" rel="external">https://blog.csdn.net/danykk/article/details/80137223</a></p>
 
           </div>
